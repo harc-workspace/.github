@@ -132,10 +132,10 @@ Migration güncellemek için API klasöründe `dotnet ef` kullanılır; migratio
 
 ## Klasörler ve ilgili README’ler
 
-- [AI teknik proje rehberi](./AI_PROJECT_GUIDE.md)
-- [API README](./harc-api/README.md)
-- [Gateway README](./harc-gateway/README.md)
-- [Frontend README](./harc-fe/README.md)
+- [AI teknik proje rehberi]()
+- [API README](https://github.com/harc-workspace/harc-api/README.md)
+- [Gateway README](https://github.com/harc-workspace/harc-gateway/README.md)
+- [Frontend README](https://github.com/harc-workspace/harc-fe/README.md)
 
 ## Önemli sınırlamalar
 
