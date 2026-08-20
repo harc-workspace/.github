@@ -30,10 +30,10 @@ jobs:
 
     steps:
       - name: Checkout instruction source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Checkout target repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: harc-workspace/${{ matrix.repository }}
           token: ${{ secrets.INSTRUCTION_SYNC_TOKEN }}
@@ -54,7 +54,7 @@ jobs:
           cp instruction-source/documentation.instructions.md "$target/documentation.instructions.md"
 
       - name: Create or update synchronization PR
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.INSTRUCTION_SYNC_TOKEN }}
           path: target
