@@ -66,15 +66,39 @@ jobs:
           body: |
             ## Summary
 
-            Synchronize the shared AI instruction contexts from `harc-workspace/.github`.
+            This automated PR synchronizes the shared AI instruction contexts from `harc-workspace/.github` so this project follows the current organization-wide engineering guidance.
 
-            Target project: **${{ matrix.display_name }}**
+            ## Target
 
-            ## Scope
+            - Repository: **${{ matrix.display_name }}** (`${{ matrix.repository }}`)
+            - Base branch: `main`
+            - Source: `harc-workspace/.github/instruction-source`
 
-            - `coding.instructions.md`
-            - `architecture.instructions.md`
-            - `security.instructions.md`
-            - `documentation.instructions.md`
+            ## Changes
 
-            Project-specific instruction files are intentionally preserved.
+            The following shared contexts are synchronized:
+
+            - `.github/instructions/coding.instructions.md`
+            - `.github/instructions/architecture.instructions.md`
+            - `.github/instructions/security.instructions.md`
+            - `.github/instructions/documentation.instructions.md`
+
+            ## Preserved
+
+            - Project-specific `AGENTS.md` and `copilot-instructions.md` files are preserved.
+            - Project-specific instruction files are preserved.
+            - Application source code, dependencies, configuration, and secrets are not changed.
+
+            ## Validation
+
+            - The workflow only opens or updates this PR when file differences exist.
+            - The synchronization step copies only the four shared instruction contexts listed above.
+            - Application build and test commands are not run by this synchronization workflow.
+
+            ## Review checklist
+
+            - [ ] Shared instruction changes are applicable to this repository.
+            - [ ] Project-specific instructions remain intact.
+            - [ ] No application source code or secret was changed.
+
+            This PR was generated automatically according to `instruction-source/pull-request.instructions.md`.

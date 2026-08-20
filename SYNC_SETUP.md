@@ -1,6 +1,6 @@
 # Automatic instruction synchronization
 
-The workflow at `.github/workflows/sync-instructions.yml` copies the shared instruction contexts from `instruction-source/` into the four HARC repositories and opens one review-ready pull request per repository.
+The workflow at `.github/workflows/sync-instructions.yml` copies the shared instruction contexts from `instruction-source/` into the four HARC repositories and opens one review-ready pull request per repository. PR descriptions follow `instruction-source/pull-request.instructions.md`.
 
 ## Required organization secret
 
