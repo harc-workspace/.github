@@ -1,0 +1,80 @@
+name: Sync shared AI instructions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - instruction-source/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    name: Sync ${{ matrix.repository }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - repository: harc-api
+            display_name: HARC API
+          - repository: harc-fe
+            display_name: HARC Frontend
+          - repository: harc-gateway
+            display_name: HARC Gateway
+          - repository: harc-aspire-host
+            display_name: HARC Aspire Host
+
+    steps:
+      - name: Checkout instruction source
+        uses: actions/checkout@v4
+
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          repository: harc-workspace/${{ matrix.repository }}
+          token: ${{ secrets.INSTRUCTION_SYNC_TOKEN }}
+          path: target
+          fetch-depth: 0
+
+      - name: Copy shared instruction files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          target="target/.github/instructions"
+          mkdir -p "$target"
+
+          cp instruction-source/coding.instructions.md "$target/coding.instructions.md"
+          cp instruction-source/architecture.instructions.md "$target/architecture.instructions.md"
+          cp instruction-source/security.instructions.md "$target/security.instructions.md"
+          cp instruction-source/documentation.instructions.md "$target/documentation.instructions.md"
+
+      - name: Create or update synchronization PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.INSTRUCTION_SYNC_TOKEN }}
+          path: target
+          base: main
+          branch: automation/sync-shared-instructions
+          delete-branch: true
+          commit-message: "chore: sync shared AI instructions"
+          title: "chore: sync shared AI instructions"
+          body: |
+            ## Summary
+
+            Synchronize the shared AI instruction contexts from `harc-workspace/.github`.
+
+            Target project: **${{ matrix.display_name }}**
+
+            ## Scope
+
+            - `coding.instructions.md`
+            - `architecture.instructions.md`
+            - `security.instructions.md`
+            - `documentation.instructions.md`
+
+            Project-specific instruction files are intentionally preserved.
